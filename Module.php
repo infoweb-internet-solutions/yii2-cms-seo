@@ -4,7 +4,7 @@ namespace infoweb\seo;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'infoweb\sep\controllers';
+    public $controllerNamespace = 'infoweb\seo\controllers';
     
     public function init()
     {

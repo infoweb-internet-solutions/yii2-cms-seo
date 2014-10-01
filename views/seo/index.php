@@ -29,10 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-
-            'entity',
+            'title',
             'entityTitle',
-
+            'entity',
             [
                 'class' => 'kartik\grid\ActionColumn',
                 'template' => '{update} {delete}',

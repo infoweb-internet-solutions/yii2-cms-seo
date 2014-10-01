@@ -3,9 +3,9 @@
 namespace infoweb\seo\controllers;
 
 use Yii;
-use app\models\Seo;
-use app\models\SeoLang;
-use app\models\SeoSearch;
+use infoweb\seo\models\Seo;
+use infoweb\seo\models\SeoLang;
+use infoweb\seo\models\SeoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,12 +66,13 @@ class SeoController extends Controller
 
         $pages = [];
 
-        // @todo Move to page class
+        // @todo Rewrite Query
         $q = new Query();
         $results =  $q->select('`p`.`id`, `pl`.`title`')
             ->from('`pages` AS `p`')
             ->innerjoin('`pages_lang` AS `pl`', '`p`.`id` = `pl`.`page_id`')
             ->where("`pl`.`language` = '" . Yii::$app->language . "'")
+            ->orderBy('`pl`.`title`')
             ->all();
 
         foreach ($results as $result)
@@ -124,7 +125,6 @@ class SeoController extends Controller
 
         } else {
 
-
             return $this->render('create', [
                 'model' => $model,
                 'entities' => ['page' => 'page'],
@@ -143,13 +143,15 @@ class SeoController extends Controller
     {
         $model = $this->findModel($id);
 
-        // @todo Move to page class
-        // @todo Use variable for 'nl-BE'
+        $pages = [];
+
+        // @todo Rewrite Query
         $q = new Query();
         $results =  $q->select('`p`.`id`, `pl`.`title`')
             ->from('`pages` AS `p`')
             ->innerjoin('`pages_lang` AS `pl`', '`p`.`id` = `pl`.`page_id`')
-            ->where('`pl`.`language` = \'nl-BE\'')
+            ->where("`pl`.`language` = '" . Yii::$app->language . "'")
+            ->orderBy('`pl`.`title`')
             ->all();
 
         foreach ($results as $result)
