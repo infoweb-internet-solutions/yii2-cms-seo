@@ -16,7 +16,7 @@ php composer.phar require infoweb-internet-solutions/yii2-cms-seo "*"
 or add
 
 ```
-"infoweb-internet-solutions/yii2-cms-sep": "*"
+"infoweb-internet-solutions/yii2-cms-seo": "*"
 ```
 
 to the require section of your `composer.json` file.
