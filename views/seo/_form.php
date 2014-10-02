@@ -9,8 +9,6 @@ use yii\helpers\Html;
 
 <div class="seo-form">
 
-    <div class="form-group">&nbsp;</div>
-
     <div class="form-group field-seo-entity">
         <label class="control-label" for="entity">Entity</label>
         <?= Html::dropDownList('Seo[entity]', $model->entity, $entities, ['class' => 'form-control', 'prompt' => 'Kies een entity']) ?>

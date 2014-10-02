@@ -1,5 +1,3 @@
-<div class="form-group">&nbsp;</div>
-
 <input type="hidden" name="<?php echo $language; ?>[SeoLang][language]" value="<?php echo $language; ?>">
 
 <?= $form->field($model, 'title')->textInput([
