@@ -3,9 +3,10 @@
 namespace infoweb\seo\models;
 
 use Yii;
-use dosamigos\translateable\TranslateableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
+use dosamigos\translateable\TranslateableBehavior;
 use infoweb\pages\models\Page;
 
 /**
@@ -30,14 +31,12 @@ class Seo extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'trans' => [ // name it the way you want
+            'trans' => [
                 'class' => TranslateableBehavior::className(),
-                // in case you named your relation differently, you can setup its relation name attribute
-                // 'relation' => 'translations',
-                // in case you named the language column differently on your translation schema
-                // 'languageField' => 'language',
                 'translationAttributes' => [
-                    'title', 'description'
+                    'title',
+                    'description',
+                    'keywords'
                 ]
             ],
             'timestamp' => [
@@ -61,8 +60,8 @@ class Seo extends \yii\db\ActiveRecord
         return [
             [['entity', 'entity_id'], 'required'],
             [['entity'], 'string'],
-            //[['created_at', 'updated_at'], 'integer'],
-            [['entity', 'entity_id'], 'unique', 'targetAttribute' => ['entity', 'entity_id'], 'message' => 'The combination of Entity and Entity ID has already been taken.']
+            [['entity_id', 'created_at', 'updated_at'], 'integer'],
+            [['entity', 'entity_id'], 'unique', 'targetAttribute' => ['entity', 'entity_id'], 'message' => Yii::t('app', 'The combination of Entity and Entity ID has already been taken.')]
         ];
     }
 
@@ -86,6 +85,20 @@ class Seo extends \yii\db\ActiveRecord
     public function getTranslations()
     {
         return $this->hasMany(SeoLang::className(), ['seo_id' => 'id']);
+    }
+    
+    public function getEntity()
+    {
+        $entity = null;
+        
+        switch ($this->entity) {
+            // Page
+            case 'page':
+                $entity = \infoweb\pages\models\Page::findOne($this->entity_id);
+                break;
+        }
+
+        return $entity;
     }
 
     public function getEntityTitle()

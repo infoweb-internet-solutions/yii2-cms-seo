@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SeoSearch */
@@ -14,7 +14,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="seo-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    
+    <?php // Flash message ?>
+    <?php if (Yii::$app->getSession()->hasFlash('seo')): ?>
+    <div class="alert alert-success">
+        <p><?= Yii::$app->getSession()->getFlash('seo') ?></p>
+    </div>
+    <?php endif; ?>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
@@ -40,6 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'width' => '100px',
             ],
         ],
+        'responsive' => true,
+        'floatHeader' => true,
+        'floatHeaderOptions' => ['scrollingTop' => 88],
+        'hover' => true,
     ]); ?>
 
 </div>

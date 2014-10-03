@@ -21,13 +21,17 @@ class m141001_120606_init extends Migration
             'created_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
             'updated_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
         ], $tableOptions);
+        
+        $this->createIndex('entity_entity_id', '{{%seo}}', ['entity', 'entity_id'], true);
+        $this->createIndex('entity_id', '{{%seo}}', 'entity_id');
 
         // Create 'seo_lang' table
         $this->createTable('{{%seo_lang}}', [
             'seo_id'        => Schema::TYPE_INTEGER . ' NOT NULL',
-            'language'      => Schema::TYPE_STRING . '(5) NOT NULL',
+            'language'      => Schema::TYPE_STRING . '(2) NOT NULL',
             'title'         => Schema::TYPE_STRING . '(255) NOT NULL',
             'description'   => Schema::TYPE_TEXT . ' NOT NULL',
+            'keywords'      => Schema::TYPE_TEXT . ' NOT NULL',
             'created_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
             'updated_at'    => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
         ], $tableOptions);

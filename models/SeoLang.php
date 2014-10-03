@@ -28,11 +28,17 @@ class SeoLang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            //[['seo_id', 'language', 'title', 'description'], 'required'],
-            //[['seo_id'], 'integer'],
-            //[['language'], 'string', 'max' => 5],
-            //[['title', 'description'], 'string', 'max' => 255],
-            [['seo_id', 'language'], 'unique', 'targetAttribute' => ['seo_id', 'language'], 'message' => 'The combination of Seo ID and Language has already been taken.']
+            [['language'], 'required'],
+            // Only required for existing records
+            [['seo_id'], 'required', 'when' => function($model) {
+                return !$model->isNewRecord;
+            }],
+            // Trim
+            [['title', 'description', 'keywords'], 'trim'],
+            [['seo_id'], 'integer'],
+            [['language'], 'string', 'max' => 2],
+            [['title'], 'string', 'max' => 255],
+            [['seo_id', 'language'], 'unique', 'targetAttribute' => ['seo_id', 'language'], 'message' => Yii::t('app', 'The combination of Seo ID and Language has already been taken.')]
         ];
     }
 
@@ -46,6 +52,7 @@ class SeoLang extends \yii\db\ActiveRecord
             'language' => Yii::t('app', 'Language'),
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
+            'keywords' => Yii::t('app', 'Keywords'),
         ];
     }
 

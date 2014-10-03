@@ -57,7 +57,8 @@ class SeoSearch extends Seo
             'updated_at' => $this > updated_at,
         ]);
 
-        $query -> andFilterWhere(['like', 'entity', $this->entity])
+        $query
+            ->andFilterWhere(['like', 'entity', $this->entity])
             ->andFilterWhere(['like', 'entity_id', $this->entity_id]);
 
         return $dataProvider;

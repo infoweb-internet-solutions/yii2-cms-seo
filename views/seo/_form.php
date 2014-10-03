@@ -1,26 +1,52 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\bootstrap\Tabs;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Seo */
+/* @var $model infoweb\partials\models\PagePartial */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="seo-form">
 
-    <div class="form-group">&nbsp;</div>
+    <?php
+    // Init the form
+    $form = ActiveForm::begin([
+        'id'                        => 'seo-form',
+        'options'                   => ['class' => 'tabbed-form'],
+        'enableAjaxValidation'      => true,
+        'enableClientValidation'    => false        
+    ]);
 
-    <div class="form-group field-seo-entity">
-        <label class="control-label" for="entity">Entity</label>
-        <?= Html::dropDownList('Seo[entity]', $model->entity, $entities, ['class' => 'form-control', 'prompt' => 'Kies een entity']) ?>
-        <div class="help-block"></div>
+    // Initialize the tabs
+    $tabs = [
+        [
+            'label' => Yii::t('app', 'General'),
+            'content' => $this->render('_default_tab', ['model' => $model, 'entities' => $entities, 'form' => $form]),
+        ]
+    ];
+    
+    // Add the language tabs
+    foreach (Yii::$app->params['languages'] as $languageId => $languageName) {
+        $tabs[] = [
+            'label' => $languageName,
+            'content' => $this->render('_language_tab', ['model' => $model->getTranslation($languageId), 'form' => $form]),
+            'active' => ($languageId == Yii::$app->language) ? true : false
+        ];
+    } 
+    
+    // Display the tabs
+    echo Tabs::widget(['items' => $tabs]);   
+    ?>
+
+    <div class="form-group buttons">
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create & close') : Yii::t('app', 'Update & close'), ['class' => 'btn btn-default', 'name' => 'close']) ?>
+        <?= Html::submitButton(Yii::t('app', $model->isNewRecord ? 'Create & new' : 'Update & new'), ['class' => 'btn btn-default', 'name' => 'new']) ?>
+        <?= Html::a(Yii::t('app', 'Close'), ['index'], ['class' => 'btn btn-danger']) ?>
     </div>
 
-    <div class="form-group field-seo-entity_id attribute entity_id-attribute">
-        <label for="seo-entity_id" class="control-label"><?= Yii::t('app', 'Page'); ?></label>
-        <?= Html::dropDownList('Seo[entity_id]', $model->entity_id, $pages, ['class' => 'form-control', 'id' => 'seo-entity_id', 'prompt' => Yii::t('app', 'Choose a page')]) ?>
-        <div class="help-block"></div>
-    </div>
+    <?php ActiveForm::end(); ?>
 
-</div>
+</div
