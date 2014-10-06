@@ -147,7 +147,7 @@ class SeoController extends Controller
                 $model->language = Yii::$app->language;
                 
                 // Set flash message
-                Yii::$app->getSession()->setFlash('seo', Yii::t('app', '{item} has been created', ['item' => $model->title]));
+                Yii::$app->getSession()->setFlash('seo', Yii::t('app', '{entity} "{item}" has been created', ['entity' => $model->entityTypeName, 'item' => $model->entityModel->name]));
               
                 // Take appropriate action based on the pushed button
                 if (isset($post['close'])) {
@@ -254,7 +254,7 @@ class SeoController extends Controller
                 $model->language = Yii::$app->language;
                 
                 // Set flash message
-                Yii::$app->getSession()->setFlash('seo', Yii::t('app', '{item} has been updated', ['item' => $model->title]));
+                Yii::$app->getSession()->setFlash('seo', Yii::t('app', '{entity} "{item}" has been updated', ['entity' => $model->entityTypeName, 'item' => $model->entityModel->name]));
               
                 // Take appropriate action based on the pushed button
                 if (isset($post['close'])) {

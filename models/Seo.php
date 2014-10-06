@@ -20,6 +20,8 @@ use infoweb\pages\models\Page;
  */
 class Seo extends \yii\db\ActiveRecord
 {
+    const TYPE_PAGE = 'page';
+    
     /**
      * @inheritdoc
      */
@@ -87,29 +89,24 @@ class Seo extends \yii\db\ActiveRecord
         return $this->hasMany(SeoLang::className(), ['seo_id' => 'id']);
     }
     
-    public function getEntity()
+    public function getEntityModel()
     {
-        $entity = null;
-        
+        switch ($this->entity) {
+            case self::TYPE_PAGE:
+            default:
+                return $this->hasOne(Page::className(), ['id' => 'entity_id']);
+                break;
+                
+        }            
+    }
+
+    public function getEntityTypeName()
+    {
         switch ($this->entity) {
             // Page
             case 'page':
-                $entity = \infoweb\pages\models\Page::findOne($this->entity_id);
+                return Yii::t('app', 'Page');
                 break;
-        }
-
-        return $entity;
-    }
-
-    public function getEntityTitle()
-    {
-
-        if ($this->entity == 'page') {
-
-            $page = Page::findOne($this->entity_id);
-            return $page->title;
-        }
-
-        return '';
+        }    
     }
 }

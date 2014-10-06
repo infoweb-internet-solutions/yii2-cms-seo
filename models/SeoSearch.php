@@ -5,6 +5,7 @@ namespace infoweb\seo\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use infoweb\seo\models\Seo;
 
 /**
@@ -18,10 +19,16 @@ class SeoSearch extends Seo
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at'], 'integer'],
-            [['entity', 'entity_id'], 'safe'],
+            [['entityModel.name'], 'safe'],
         ];
     }
+    
+    public function attributes()
+    {
+        // Add related fields to searchable attributes
+        return array_merge(parent::attributes(), ['entityModel.name']);
+    }
+    
 
     /**
      * @inheritdoc
@@ -46,20 +53,24 @@ class SeoSearch extends Seo
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+        // Join the entity model as a relation
+        $query->joinWith(['entityModel' => function($query) {
+             $query->join('INNER JOIN', ['entity' => 'pages_lang'], 'pages.id = entity.page_id AND entity.language = \'' . Yii::$app->language . '\'');
+        }]);
+        
+        // enable sorting for the related column
+        $dataProvider->sort->attributes['entityModel.name'] = [
+            'asc' => ['entity.name' => SORT_ASC],
+            'desc' => ['entity.name' => SORT_DESC],
+        ];
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ]);
-
         $query
-            ->andFilterWhere(['like', 'entity', $this->entity])
-            ->andFilterWhere(['like', 'entity_id', $this->entity_id]);
+            ->andFilterWhere(['LIKE', 'entity.name', $this->getAttribute('entityModel.name')]);
 
         return $dataProvider;
     }

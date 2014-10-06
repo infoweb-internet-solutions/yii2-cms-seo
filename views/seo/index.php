@@ -35,9 +35,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'title',
-            'entityTitle',
-            'entity',
+            [
+                'class' => 'kartik\grid\DataColumn',
+                'label' => Yii::t('app', 'Entity'),
+                'value' => 'entityTypeName'
+            ],
+            [
+                'class' => 'kartik\grid\DataColumn',
+                'label' => Yii::t('app', 'Name'),
+                'attribute' => 'entityModel.name',
+                'value' => 'entityModel.name',
+                'enableSorting' => true
+            ],
             [
                 'class' => 'kartik\grid\ActionColumn',
                 'template' => '{update} {delete}',
