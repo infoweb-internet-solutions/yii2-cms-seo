@@ -49,9 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => 'kartik\grid\ActionColumn',
-                'template' => '{update} {delete}',
+                'template' => '{update}',
                 'updateOptions'=>['title' => 'Update', 'data-toggle' => 'tooltip'],
-                'deleteOptions'=>['title' => 'Delete', 'data-toggle' => 'tooltip'],
                 'width' => '100px',
             ],
         ],
