@@ -38,7 +38,7 @@ class SeoLang extends \yii\db\ActiveRecord
             [['seo_id'], 'integer'],
             [['language'], 'string', 'max' => 2],
             [['title'], 'string', 'max' => 255],
-            [['seo_id', 'language'], 'unique', 'targetAttribute' => ['seo_id', 'language'], 'message' => Yii::t('app', 'The combination of Seo ID and Language has already been taken.')]
+            [['seo_id', 'language'], 'unique', 'targetAttribute' => ['seo_id', 'language'], 'message' => Yii::t('infoweb/seo', 'The combination of Seo ID and Language has already been taken.')]
         ];
     }
 
@@ -48,11 +48,11 @@ class SeoLang extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'seo_id' => Yii::t('app', 'Seo ID'),
+            'seo_id' => Yii::t('infoweb/seo', 'Seo ID'),
             'language' => Yii::t('app', 'Language'),
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
-            'keywords' => Yii::t('app', 'Keywords'),
+            'keywords' => Yii::t('infoweb/seo', 'Keywords'),
         ];
     }
 

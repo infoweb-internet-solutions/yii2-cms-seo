@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Seo */
 
 $this->title = Yii::t('app', 'Update {modelClass}', [
-    'modelClass' => 'Seo',
+    'modelClass' => Yii::t('infoweb/seo', 'Seo'),
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Seo'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('infoweb/seo', 'Seo'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>

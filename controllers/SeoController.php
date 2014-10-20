@@ -147,7 +147,7 @@ class SeoController extends Controller
                 $model->language = Yii::$app->language;
                 
                 // Set flash message
-                Yii::$app->getSession()->setFlash('seo', Yii::t('app', '{entity} "{item}" has been created', ['entity' => $model->entityTypeName, 'item' => $model->entityModel->name]));
+                Yii::$app->getSession()->setFlash('seo', Yii::t('app', '"{item}" has been created', ['item' => $model->entityModel->name]));
               
                 // Take appropriate action based on the pushed button
                 if (isset($post['close'])) {
@@ -254,7 +254,7 @@ class SeoController extends Controller
                 $model->language = Yii::$app->language;
                 
                 // Set flash message
-                Yii::$app->getSession()->setFlash('seo', Yii::t('app', '{entity} "{item}" has been updated', ['entity' => $model->entityTypeName, 'item' => $model->entityModel->name]));
+                Yii::$app->getSession()->setFlash('seo', Yii::t('app', '"{item}" has been updated', ['item' => $model->entityModel->name]));
               
                 // Take appropriate action based on the pushed button
                 if (isset($post['close'])) {
@@ -298,7 +298,7 @@ class SeoController extends Controller
         if (($model = Seo::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist'));
         }
     }
 }

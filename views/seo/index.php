@@ -8,7 +8,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\SeoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Seo');
+$this->title = Yii::t('infoweb/seo', 'Seo');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="seo-index">
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Seo',
+    'modelClass' => Yii::t('infoweb/seo', 'Seo'),
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 

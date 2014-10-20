@@ -63,7 +63,7 @@ class Seo extends \yii\db\ActiveRecord
             [['entity', 'entity_id'], 'required'],
             [['entity'], 'string'],
             [['entity_id', 'created_at', 'updated_at'], 'integer'],
-            [['entity', 'entity_id'], 'unique', 'targetAttribute' => ['entity', 'entity_id'], 'message' => Yii::t('app', 'The combination of Entity and Entity ID has already been taken.')]
+            [['entity', 'entity_id'], 'unique', 'targetAttribute' => ['entity', 'entity_id'], 'message' => Yii::t('infoweb/seo', 'The combination of Entity and Entity ID has already been taken.')]
         ];
     }
 
@@ -105,7 +105,7 @@ class Seo extends \yii\db\ActiveRecord
         switch ($this->entity) {
             // Page
             case 'page':
-                return Yii::t('app', 'Page');
+                return Yii::t('infoweb/pages', 'Page');
                 break;
         }    
     }
