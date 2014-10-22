@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'kartik\grid\ActionColumn',
                 'template' => '{update}',
-                'updateOptions'=>['title' => 'Update', 'data-toggle' => 'tooltip'],
+                'updateOptions' => ['title' => Yii::t('app', 'Update'), 'data-toggle' => 'tooltip'],
                 'width' => '100px',
             ],
         ],
