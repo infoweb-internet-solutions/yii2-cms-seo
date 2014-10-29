@@ -274,19 +274,6 @@ class SeoController extends Controller
     }
 
     /**
-     * Deletes an existing Seo model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
      * Finds the Seo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
@@ -298,7 +285,7 @@ class SeoController extends Controller
         if (($model = Seo::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist'));
+            throw new NotFoundHttpException(Yii::t('app', 'The requested item does not exist'));
         }
     }
 }

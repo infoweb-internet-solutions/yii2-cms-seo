@@ -9,7 +9,7 @@ $this->title = Yii::t('app', 'Update {modelClass}', [
     'modelClass' => Yii::t('infoweb/seo', 'Seo'),
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('infoweb/seo', 'Seo'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => "{$model->entityTypeName}: {$model->entityModel->name}", 'url' => ['update', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="seo-update">
