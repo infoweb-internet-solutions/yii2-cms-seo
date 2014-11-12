@@ -20,12 +20,7 @@ use yii\bootstrap\Tabs;
     ]);
 
     // Initialize the tabs
-    $tabs = [
-        [
-            'label' => Yii::t('app', 'General'),
-            'content' => $this->render('_default_tab', ['model' => $model, 'entities' => $entities, 'form' => $form]),
-        ]
-    ];
+    $tabs = [];
     
     // Add the language tabs
     foreach (Yii::$app->params['languages'] as $languageId => $languageName) {
@@ -34,7 +29,13 @@ use yii\bootstrap\Tabs;
             'content' => $this->render('_language_tab', ['model' => $model->getTranslation($languageId), 'form' => $form]),
             'active' => ($languageId == Yii::$app->language) ? true : false
         ];
-    } 
+    }
+    
+    // Add the default tab
+    $tabs[] = [
+        'label' => Yii::t('app', 'General'),
+        'content' => $this->render('_default_tab', ['model' => $model, 'entities' => $entities, 'form' => $form]),
+    ]; 
     
     // Display the tabs
     echo Tabs::widget(['items' => $tabs]);   

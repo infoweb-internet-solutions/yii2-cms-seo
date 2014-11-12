@@ -18,9 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::encode($this->title) ?>
         <?php // Buttons ?>
         <div class="pull-right">
+            <?php if (Yii::$app->user->can('Superadmin')) : ?>
             <?= Html::a(Yii::t('app', 'Create {modelClass}', [
                 'modelClass' => Yii::t('infoweb/seo', 'Seo'),
             ]), ['create'], ['class' => 'btn btn-success']) ?>
+            <?php endif; ?>
             <?= Html::a('<span class="fa fa-gear"></span>', ['settings'], ['class' => 'btn btn-default', 'title' => Yii::t('app', 'Settings')]) ?>
         </div>
     </h1>
