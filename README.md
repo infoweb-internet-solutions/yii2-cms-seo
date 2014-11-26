@@ -30,15 +30,12 @@ Once the extension is installed, simply modify your application configuration as
 Your backend configuration as follows:
 
 ```php
-return [
+'modules' => [
     ...
-    'modules' => [
-        'seo' => [
-            'class' => 'infoweb\seo\Module',
-        ],
+    'seo' => [
+        'class' => 'infoweb\seo\Module',
     ],
-    ...
-];
+],
 ```
 
 Import the translations and use category 'infoweb/seo':
