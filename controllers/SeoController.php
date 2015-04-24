@@ -307,23 +307,23 @@ class SeoController extends Controller
                     // Update 'seo/meta/title'    
                     $title->language = $languageId;
                     $title->value = $post['title'][$languageId];
-                    
+
                     if (!$title->saveTranslation())
-                        throw new \Exception('a');
-                    
+                        throw new \Exception('Titel is een verplicht veld');
+
                     // Update 'seo/meta/description'    
                     $description->language = $languageId;
                     $description->value = $post['description'][$languageId];
-                    
+
                     if (!$description->saveTranslation())
-                        throw new \Exception('b');
-                    
-                    // Update 'seo/meta/keywords'    
+                        throw new \Exception('Beschrijving is een verplicht veld');
+
+                    // Update 'seo/meta/keywords'
                     $keywords->language = $languageId;
                     $keywords->value = $post['keywords'][$languageId];
-                    
+
                     if (!$keywords->saveTranslation())
-                        throw new \Exception('c');
+                        throw new \Exception('Keywords is een verplicht veld');
                 }
                 
                 $transaction->commit();
