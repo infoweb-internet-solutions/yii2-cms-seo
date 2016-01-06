@@ -28,7 +28,7 @@ class m141001_120606_init extends Migration
         // Create 'seo_lang' table
         $this->createTable('{{%seo_lang}}', [
             'seo_id'        => Schema::TYPE_INTEGER . ' NOT NULL',
-            'language'      => Schema::TYPE_STRING . '(2) NOT NULL',
+            'language'      => Schema::TYPE_STRING . '(10) NOT NULL',
             'title'         => Schema::TYPE_STRING . '(255) NOT NULL',
             'description'   => Schema::TYPE_TEXT . ' NOT NULL',
             'keywords'      => Schema::TYPE_TEXT . ' NOT NULL',
