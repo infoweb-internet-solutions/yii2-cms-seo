@@ -20,8 +20,6 @@ use infoweb\pages\models\Page;
  */
 class Seo extends \yii\db\ActiveRecord
 {
-    const TYPE_PAGE = 'page';
-    
     /**
      * @inheritdoc
      */
