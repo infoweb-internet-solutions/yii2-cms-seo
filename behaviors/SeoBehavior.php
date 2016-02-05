@@ -48,7 +48,7 @@ class SeoBehavior extends Behavior
 
             $seo                = $this->owner->seo;
             $seo->language      = $languageId;
-            $seo->title         = (!empty($post['title'])) ? $data['title'] : $post['Lang'][$languageId][$this->titleAttribute];
+            $seo->title         = (!empty($data['title'])) ? $data['title'] : $post['Lang'][$languageId][$this->titleAttribute];
             $seo->description   = $data['description'];
             $seo->keywords      = $data['keywords'];
 
@@ -79,7 +79,7 @@ class SeoBehavior extends Behavior
 
             $seo                = $this->owner->seo;
             $seo->language      = $languageId;
-            $seo->title         = (!empty($post['title'])) ? $data['title'] : $post['Lang'][$languageId][$this->titleAttribute];
+            $seo->title         = (!empty($data['title'])) ? $data['title'] : $post['Lang'][$languageId][$this->titleAttribute];
             $seo->description   = $data['description'];
             $seo->keywords      = $data['keywords'];
 
