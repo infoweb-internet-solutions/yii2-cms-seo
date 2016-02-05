@@ -4,10 +4,12 @@ namespace infoweb\seo\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQueryInterface;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use dosamigos\translateable\TranslateableBehavior;
 use infoweb\pages\models\Page;
+use yii\helpers\StringHelper;
 
 /**
  * This is the model class for table "seo".
@@ -89,22 +91,11 @@ class Seo extends \yii\db\ActiveRecord
     
     public function getEntityModel()
     {
-        switch ($this->entity) {
-            case self::TYPE_PAGE:
-            default:
-                return $this->hasOne(Page::className(), ['id' => 'entity_id']);
-                break;
-                
-        }            
+        return $this->hasOne($this->entity, ['id' => 'entity_id']);
     }
 
     public function getEntityTypeName()
     {
-        switch ($this->entity) {
-            // Page
-            case 'page':
-                return Yii::t('infoweb/pages', 'Page');
-                break;
-        }    
+        return StringHelper::basename($this->entity);
     }
 }

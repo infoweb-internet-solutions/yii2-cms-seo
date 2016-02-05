@@ -13,13 +13,12 @@ class SeoBehavior extends Behavior
 {
     public $titleAttribute = 'title';
 
-    private $_prop2;
-
     public function events()
     {
         return [
             ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
             ActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
+            ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
         ];
     }
 
@@ -37,19 +36,11 @@ class SeoBehavior extends Behavior
         ]);
 
         if (!$seo->save()) {
-            echo __FILE__ . ' => ' . __LINE__; exit();
-            /*
-            return $this->render('create', [
-                'model' => $this->owner->model,
-                'templates' => $templates,
-                'sliders' => $sliders,
-            ]);
-            */
+            return false;
         }
 
         $post = Yii::$app->request->post();
 
-        // Save the translations
         foreach ($languages as $languageId => $languageName) {
 
             // Save the seo tag translations
@@ -57,17 +48,18 @@ class SeoBehavior extends Behavior
 
             $seo                = $this->owner->seo;
             $seo->language      = $languageId;
-            $seo->title         = (!empty($data[$this->titleAttribute])) ? $data[$this->titleAttribute] : $post['Lang'][$languageId][$this->titleAttribute];
+            $seo->title         = (!empty($post['title'])) ? $data['title'] : $post['Lang'][$languageId][$this->titleAttribute];
             $seo->description   = $data['description'];
             $seo->keywords      = $data['keywords'];
 
             if (!$seo->saveTranslation()) {
-                echo __FILE__ . ' => ' . __LINE__; exit();
+                return false;
             }
         }
 
         $transaction->commit();
 
+        return true;
     }
 
     public function afterUpdate($event)
@@ -87,17 +79,18 @@ class SeoBehavior extends Behavior
 
             $seo                = $this->owner->seo;
             $seo->language      = $languageId;
-            $seo->title         = (!empty($data[$this->titleAttribute])) ? $data[$this->titleAttribute] : $post['Lang'][$languageId][$this->titleAttribute];
+            $seo->title         = (!empty($post['title'])) ? $data['title'] : $post['Lang'][$languageId][$this->titleAttribute];
             $seo->description   = $data['description'];
             $seo->keywords      = $data['keywords'];
 
             if (!$seo->saveTranslation()) {
-                echo __FILE__ . ' => ' . __LINE__; exit();
+                return false;
             }
         }
 
         $transaction->commit();
 
+        return true;
     }
 
     /**
@@ -108,11 +101,10 @@ class SeoBehavior extends Behavior
         return $this->owner->hasOne(Seo::className(), ['entity_id' => 'id'])->where(['entity' => Page::className()]);
     }
 
-    public function delete()
+    public function beforeDelete()
     {
         // Try to load and delete the attached 'Seo' entity
-        if (!$this->seo->delete())
-            throw new Exception(Yii::t('infoweb/seo', 'Error while deleting the attached seo tag'));
+        return $this->seo->delete();
     }
 
 }

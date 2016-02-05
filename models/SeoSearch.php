@@ -53,24 +53,26 @@ class SeoSearch extends Seo
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        
-        // Join the entity model as a relation
-        $query->joinWith(['entityModel' => function($query) {
-             $query->join('INNER JOIN', ['entity' => 'pages_lang'], 'pages.id = entity.page_id AND entity.language = \'' . Yii::$app->language . '\'');
-        }]);
-        
-        // enable sorting for the related column
-        $dataProvider->sort->attributes['entityModel.name'] = [
-            'asc' => ['entity.name' => SORT_ASC],
-            'desc' => ['entity.name' => SORT_DESC],
-        ];
 
+
+        // Join the entity model as a relation[
+       // $query->joinWith('entityModel')->joinWith('translations')->where(['language' => Yii::$app->language]);
+
+
+        /*
+                // enable sorting for the related column
+                $dataProvider->sort->attributes['entityModel.name'] = [
+                    'asc' => ['entity.name' => SORT_ASC],
+                    'desc' => ['entity.name' => SORT_DESC],
+                ];
+*/
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query
-            ->andFilterWhere(['LIKE', 'entity.name', $this->getAttribute('entityModel.name')]);
+
+        //$query->andFilterWhere(['LIKE', 'title', $this->title]);
+
 
         return $dataProvider;
     }
