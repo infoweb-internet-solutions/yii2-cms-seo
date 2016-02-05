@@ -4,14 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Seo */
-
 $this->title = Yii::t('app', 'Update {modelClass}', [
-    'modelClass' => Yii::t('app', 'Settings'),
+    'modelClass' => Yii::t('infoweb/seo', 'seo settings'),
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('infoweb/seo', 'Seo'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('infoweb/settings', 'Settings'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="seo-settings">
@@ -55,8 +52,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     
         <div class="form-group buttons">
             <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']) ?>
-            <?= Html::submitButton(Yii::t('app', 'Update & close'), ['class' => 'btn btn-default', 'name' => 'close']) ?>
-            <?= Html::a(Yii::t('app', 'Close'), ['index'], ['class' => 'btn btn-danger']) ?>
         </div>
     
         <?php ActiveForm::end(); ?>
