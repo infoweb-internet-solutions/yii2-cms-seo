@@ -98,13 +98,23 @@ class SeoBehavior extends Behavior
      */
     public function getSeo()
     {
-        return $this->owner->hasOne(Seo::className(), ['entity_id' => 'id'])->where(['entity' => Page::className()]);
+        return $this->owner->hasOne(Seo::className(), ['entity_id' => 'id'])->where(['entity' => $this->owner->className()]);
     }
 
     public function beforeDelete()
     {
         // Try to load and delete the attached 'Seo' entity
         return $this->seo->delete();
+    }
+
+    /**
+     * Returns an array of the non-empty seo tags that are attached to the page.
+     *
+     * @return  array
+     */
+    public function getSeoTags()
+    {
+        return array_filter($this->owner->seo->getTranslation((($this->owner->language == null) ? Yii::$app->language : $this->owner->language))->attributes);
     }
 
 }
