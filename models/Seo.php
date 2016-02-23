@@ -7,7 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQueryInterface;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use dosamigos\translateable\TranslateableBehavior;
+use creocoder\translateable\TranslateableBehavior;
 use infoweb\pages\models\Page;
 use yii\helpers\StringHelper;
 
@@ -33,7 +33,7 @@ class Seo extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            'trans' => [
+            'translateable' => [
                 'class' => TranslateableBehavior::className(),
                 'translationAttributes' => [
                     'title',
@@ -88,7 +88,7 @@ class Seo extends \yii\db\ActiveRecord
     {
         return $this->hasMany(SeoLang::className(), ['seo_id' => 'id']);
     }
-    
+
     public function getEntityModel()
     {
         return $this->hasOne($this->entity, ['id' => 'entity_id']);

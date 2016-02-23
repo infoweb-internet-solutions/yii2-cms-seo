@@ -2,12 +2,11 @@
 
 namespace infoweb\seo\behaviors;
 
-use infoweb\pages\models\Page;
 use yii;
 use yii\base\Exception;
-use infoweb\seo\models\Seo;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use infoweb\seo\models\Seo;
 
 class SeoBehavior extends Behavior
 {
@@ -24,10 +23,7 @@ class SeoBehavior extends Behavior
 
     public function afterInsert($event)
     {
-        $languages = Yii::$app->params['languages'];
-
-        // Wrap the everything in a database transaction
-        $transaction = Yii::$app->db->beginTransaction();
+        $post = Yii::$app->request->post();
 
         // Create the seo tag
         $seo = new Seo([
@@ -35,60 +31,37 @@ class SeoBehavior extends Behavior
             'entity_id' => $this->owner->id
         ]);
 
-        if (!$seo->save()) {
-            return false;
-        }
-
-        $post = Yii::$app->request->post();
-
-        foreach ($languages as $languageId => $languageName) {
-
-            // Save the seo tag translations
-            $data = $post['SeoLang'][$languageId];
-
-            $seo                = $this->owner->seo;
-            $seo->language      = $languageId;
-            $seo->title         = (!empty($data['title'])) ? $data['title'] : $post['Lang'][$languageId][$this->titleAttribute];
-            $seo->description   = $data['description'];
-            $seo->keywords      = $data['keywords'];
-
-            if (!$seo->saveTranslation()) {
-                return false;
+        foreach ($post['SeoLang'] as $language => $data) {
+            foreach ($data as $attribute => $translation) {
+                $seo->translate($language)->$attribute = $translation;
             }
         }
 
-        $transaction->commit();
+        if (!$seo->save()) {
+            return false;
+        }
 
         return true;
     }
 
     public function afterUpdate($event)
     {
-        $languages = Yii::$app->params['languages'];
-
-        // Wrap the everything in a database transaction
-        $transaction = Yii::$app->db->beginTransaction();
-
         $post = Yii::$app->request->post();
 
-        // Save the translations
-        foreach ($languages as $languageId => $languageName) {
+        $seo = Seo::findOne([
+            'entity'    => $this->owner->className(),
+            'entity_id' => $this->owner->id
+        ]);
 
-            // Save the seo tag translations
-            $data = $post['SeoLang'][$languageId];
-
-            $seo                = $this->owner->seo;
-            $seo->language      = $languageId;
-            $seo->title         = (!empty($data['title'])) ? $data['title'] : $post['Lang'][$languageId][$this->titleAttribute];
-            $seo->description   = $data['description'];
-            $seo->keywords      = $data['keywords'];
-
-            if (!$seo->saveTranslation()) {
-                return false;
+        foreach ($post['SeoLang'] as $language => $data) {
+            foreach ($data as $attribute => $translation) {
+                $seo->translate($language)->$attribute = $translation;
             }
         }
 
-        $transaction->commit();
+        if (!$seo->save()) {
+            return false;
+        }
 
         return true;
     }
@@ -114,7 +87,7 @@ class SeoBehavior extends Behavior
      */
     public function getSeoTags()
     {
-        return array_filter($this->owner->seo->getTranslation((($this->owner->language == null) ? Yii::$app->language : $this->owner->language))->attributes);
+        return array_filter($this->owner->seo->translate()->attributes);
     }
 
 }
