@@ -81,7 +81,11 @@ class SeoBehavior extends Behavior
     public function beforeDelete()
     {
         // Try to load and delete the attached 'Seo' entity
-        return $this->owner->seo->delete();
+        if (isset($this->owner->seo)) {
+            return $this->owner->seo->delete();
+        } else {
+            return false;
+        }
     }
 
     /**
