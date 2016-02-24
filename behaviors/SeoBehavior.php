@@ -25,20 +25,22 @@ class SeoBehavior extends Behavior
     {
         $post = Yii::$app->request->post();
 
-        // Create the seo tag
-        $seo = new Seo([
-            'entity'    => $this->owner->className(),
-            'entity_id' => $this->owner->id
-        ]);
+        if (isset($post['SeoLang'])) {
+            // Create the seo tag
+            $seo = new Seo([
+                'entity'    => $this->owner->className(),
+                'entity_id' => $this->owner->id
+            ]);
 
-        foreach ($post['SeoLang'] as $language => $data) {
-            foreach ($data as $attribute => $translation) {
-                $seo->translate($language)->$attribute = $translation;
+            foreach ($post['SeoLang'] as $language => $data) {
+                foreach ($data as $attribute => $translation) {
+                    $seo->translate($language)->$attribute = $translation;
+                }
             }
-        }
 
-        if (!$seo->save()) {
-            return false;
+            if (!$seo->save()) {
+                return false;
+            }
         }
 
         return true;
@@ -48,19 +50,21 @@ class SeoBehavior extends Behavior
     {
         $post = Yii::$app->request->post();
 
-        $seo = Seo::findOne([
-            'entity'    => $this->owner->className(),
-            'entity_id' => $this->owner->id
-        ]);
+        if (isset($post['SeoLang'])) {
+            $seo = Seo::findOne([
+                'entity'    => $this->owner->className(),
+                'entity_id' => $this->owner->id
+            ]);
 
-        foreach ($post['SeoLang'] as $language => $data) {
-            foreach ($data as $attribute => $translation) {
-                $seo->translate($language)->$attribute = $translation;
+            foreach ($post['SeoLang'] as $language => $data) {
+                foreach ($data as $attribute => $translation) {
+                    $seo->translate($language)->$attribute = $translation;
+                }
             }
-        }
 
-        if (!$seo->save()) {
-            return false;
+            if (!$seo->save()) {
+                return false;
+            }
         }
 
         return true;
