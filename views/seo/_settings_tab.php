@@ -1,7 +1,7 @@
 <?php
-$tags['title']->language = $language;
-$tags['description']->language = $language;
-$tags['keywords']->language = $language;
+$tags['title']->translate($language);
+$tags['description']->translate($language);
+$tags['keywords']->translate($language);
 ?>
 <div class="tab-content language-tab">
     <?= $form->field($tags['title'], "value")->textArea([
