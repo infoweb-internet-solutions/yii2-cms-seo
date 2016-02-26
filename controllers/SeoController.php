@@ -41,25 +41,25 @@ class SeoController extends Controller
                 // Update the values
                 foreach ($languages as $languageId => $languageName) {
                     // Update 'seo/meta/title'
-                    $title->language = $languageId;
-                    $title->value = $post['title'][$languageId];
-
-                    if (!$title->saveTranslation())
-                        throw new \Exception('Titel is een verplicht veld');
+                    $title->translate($languageId)->value  = $post['title'][$languageId];
 
                     // Update 'seo/meta/description'
-                    $description->language = $languageId;
-                    $description->value = $post['description'][$languageId];
-
-                    if (!$description->saveTranslation())
-                        throw new \Exception('Beschrijving is een verplicht veld');
+                    $description->translate($languageId)->value  = $post['description'][$languageId];
 
                     // Update 'seo/meta/keywords'
-                    $keywords->language = $languageId;
-                    $keywords->value = $post['keywords'][$languageId];
+                    $keywords->translate($languageId)->value  = $post['keywords'][$languageId];
+                }
 
-                    if (!$keywords->saveTranslation())
-                        throw new \Exception('Keywords is een verplicht veld');
+                if (!$title->save()) {
+                    echo __FILE__ . ' => ' . __LINE__; exit();
+                }
+
+                if (!$description->save()) {
+                    echo __FILE__ . ' => ' . __LINE__; exit();
+                }
+
+                if (!$keywords->save()) {
+                    echo __FILE__ . ' => ' . __LINE__; exit();
                 }
 
                 $transaction->commit();
