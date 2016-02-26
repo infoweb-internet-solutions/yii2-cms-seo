@@ -10,7 +10,7 @@ foreach (Yii::$app->params['languages'] as $languageId => $languageName) {
         'label' => $languageName . ((Yii::$app->getModule('seo')->allowContentDuplication) ? Icon::show('exchange', ['class' => 'duplicateable-all-icon not-converted', 'data-language' => $languageId]) : ''),
         'content' => $this->render('_default_seo_tab', [
             'form'  => $form,
-            'seo'   => ($model->isNewRecord) ? (new \infoweb\seo\models\Seo)->translate($languageId) : $model->seo->translate($languageId),
+            'seo'   => ($model->isNewRecord || !isset($model->seo)) ? (new \infoweb\seo\models\Seo)->translate($languageId) : $model->seo->translate($languageId),
         ]),
         'active' => ($languageId == Yii::$app->language) ? true : false
     ];
