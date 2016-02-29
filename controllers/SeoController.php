@@ -51,15 +51,15 @@ class SeoController extends Controller
                 }
 
                 if (!$title->save()) {
-                    echo __FILE__ . ' => ' . __LINE__; exit();
+                    return $this->render('settings', ['tags' => $tags]);
                 }
 
                 if (!$description->save()) {
-                    echo __FILE__ . ' => ' . __LINE__; exit();
+                    return $this->render('settings', ['tags' => $tags]);
                 }
 
                 if (!$keywords->save()) {
-                    echo __FILE__ . ' => ' . __LINE__; exit();
+                    return $this->render('settings', ['tags' => $tags]);
                 }
 
                 $transaction->commit();
